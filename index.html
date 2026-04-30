@@ -8,57 +8,64 @@
   <title>KrespoAi Production Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
     html,body,#root{height:100%;background:#07070E;overflow:hidden;}
     body{color:#F2F2FF;font-family:'DM Sans',sans-serif;}
-    #splash{position:fixed;inset:0;background:#07070E;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
-    .logo{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#F0A500,#E07800);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#000;}
-    .sp{color:#525270;font-size:13px;}
-    .spin{width:20px;height:20px;border:2px solid rgba(240,165,0,.2);border-top:2px solid #F0A500;border-radius:50%;animation:sp .7s linear infinite;}
-    @keyframes sp{to{transform:rotate(360deg)}}
+    .syne{font-family:'Syne',sans-serif;}
+    .fu{display:flex;flex-direction:column;gap:0;}
+    input,textarea,select{outline:none;font-family:'DM Sans',sans-serif;color:#F2F2FF;}
+    input::placeholder,textarea::placeholder{color:#525270;}
+    ::-webkit-scrollbar{width:3px;}
+    ::-webkit-scrollbar-track{background:transparent;}
+    ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.07);border-radius:3px;}
+    @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    @keyframes confetti{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(-60px) rotate(720deg);opacity:0}}
+    #splash{position:fixed;inset:0;background:#07070E;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:9999;}
+    .s-logo{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#F0A500,#E07800);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#000;font-family:'DM Sans',sans-serif;}
+    .s-text{color:#525270;font-size:13px;}
+    .s-spin{width:20px;height:20px;border:2px solid rgba(240,165,0,.2);border-top:2px solid #F0A500;border-radius:50%;animation:spin .7s linear infinite;}
   </style>
 </head>
 <body>
   <div id="splash">
-    <div class="logo">K</div>
-    <p class="sp">KrespoAi Production Hub</p>
-    <div class="spin"></div>
+    <div class="s-logo">K</div>
+    <p class="s-text">KrespoAi Production Hub</p>
+    <div class="s-spin"></div>
   </div>
   <div id="root"></div>
 
-  <!-- Step 1: Load React synchronously from CDN -->
   <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/lucide-react@0.383.0/dist/umd/lucide-react.js"></script>
 
-  <!-- Step 2: Expose globals that compiled code needs -->
   <script>
-    var React = window.React;
-    var ReactDOM = window.ReactDOM;
-    var useState = React.useState;
-    var useEffect = React.useEffect;
-    var useCallback = React.useCallback;
-    var useRef = React.useRef;
-    var BookOpen=LucideReact.BookOpen,Zap=LucideReact.Zap,Film=LucideReact.Film,
-    Briefcase=LucideReact.Briefcase,Heart=LucideReact.Heart,
-    LayoutDashboard=LucideReact.LayoutDashboard,Sparkles=LucideReact.Sparkles,
-    Download=LucideReact.Download,FileText=LucideReact.FileText,
-    Check=LucideReact.Check,X=LucideReact.X,ChevronLeft=LucideReact.ChevronLeft,
-    MoreHorizontal=LucideReact.MoreHorizontal,Eye=LucideReact.Eye,
-    EyeOff=LucideReact.EyeOff,LogOut=LucideReact.LogOut,Clock=LucideReact.Clock,
-    Trash2=LucideReact.Trash2,Search=LucideReact.Search,
-    AlertCircle=LucideReact.AlertCircle,Star=LucideReact.Star,
-    CreditCard=LucideReact.CreditCard,CheckCircle=LucideReact.CheckCircle,
-    ArrowRight=LucideReact.ArrowRight,Lock=LucideReact.Lock,
-    Receipt=LucideReact.Receipt,TrendingUp=LucideReact.TrendingUp,
-    Crown=LucideReact.Crown,ShoppingBag=LucideReact.ShoppingBag,
-    Upload=LucideReact.Upload,Flame=LucideReact.Flame,
-    BarChart2=LucideReact.BarChart2,Package=LucideReact.Package,
-    PlusCircle=LucideReact.PlusCircle,RefreshCw=LucideReact.RefreshCw,
-    Copy=LucideReact.Copy,User=LucideReact.User,Globe=LucideReact.Globe;
+    /* Expose React hooks and Lucide icons as globals */
+    var useState=React.useState,useEffect=React.useEffect,
+        useCallback=React.useCallback,useRef=React.useRef;
+    var BookOpen=LucideReact.BookOpen,Zap=LucideReact.Zap,
+        Film=LucideReact.Film,Briefcase=LucideReact.Briefcase,
+        Heart=LucideReact.Heart,LayoutDashboard=LucideReact.LayoutDashboard,
+        Sparkles=LucideReact.Sparkles,Download=LucideReact.Download,
+        FileText=LucideReact.FileText,Check=LucideReact.Check,
+        X=LucideReact.X,ChevronLeft=LucideReact.ChevronLeft,
+        MoreHorizontal=LucideReact.MoreHorizontal,Eye=LucideReact.Eye,
+        EyeOff=LucideReact.EyeOff,LogOut=LucideReact.LogOut,
+        Clock=LucideReact.Clock,Trash2=LucideReact.Trash2,
+        Search=LucideReact.Search,AlertCircle=LucideReact.AlertCircle,
+        Star=LucideReact.Star,CreditCard=LucideReact.CreditCard,
+        CheckCircle=LucideReact.CheckCircle,ArrowRight=LucideReact.ArrowRight,
+        Lock=LucideReact.Lock,Receipt=LucideReact.Receipt,
+        TrendingUp=LucideReact.TrendingUp,Crown=LucideReact.Crown,
+        ShoppingBag=LucideReact.ShoppingBag,Upload=LucideReact.Upload,
+        Flame=LucideReact.Flame,BarChart2=LucideReact.BarChart2,
+        Package=LucideReact.Package,PlusCircle=LucideReact.PlusCircle,
+        RefreshCw=LucideReact.RefreshCw,Copy=LucideReact.Copy,
+        User=LucideReact.User,Globe=LucideReact.Globe;
   </script>
 
-  <!-- Step 3: App code at TOP LEVEL (not inside any function) -->
   <script>
 // KrespoAi compiled app
 // ── SUPABASE CONFIG ───────────────────────────────────────────────
@@ -193,23 +200,7 @@ const SEED_PACKS = [
     { id: "seed5", title: "Health Education Prompts — 15 Topics", seller: "MedWriter_Pro", sellerAvatar: "M", category: "health", price: 1200, currency: "NGN", downloads: 156, rating: 4.8, reviews: 28, description: "15 evidence-based health education prompts for Nigerian doctors and health educators.", preview: ["Create a simple patient education leaflet for Type 2 Diabetes for Nigerian patients, use plain English and include local food examples"], totalPrompts: 15, featured: false, createdAt: new Date(Date.now() - 86400000 * 10).toISOString() },
 ];
 // ── GOOGLE FONTS ──────────────────────────────────────────────────
-const FontStyle = () => (React.createElement("style", null, `
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-    body{background:${C.bg};color:${C.text};font-family:'DM Sans',sans-serif;}
-    .syne{font-family:'Syne',sans-serif;}
-    .fu{display:flex;flex-direction:column;gap:0;}
-    input,textarea,select{outline:none;font-family:'DM Sans',sans-serif;}
-    input::placeholder,textarea::placeholder{color:${C.muted};}
-    ::-webkit-scrollbar{width:3px;}
-    ::-webkit-scrollbar-track{background:transparent;}
-    ::-webkit-scrollbar-thumb{background:${C.border};border-radius:3px;}
-    @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-    @keyframes confetti{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(-60px) rotate(720deg);opacity:0}}
-  `));
+const FontStyle = () => null;
 // ── AI ENGINE ─────────────────────────────────────────────────────
 const KAI = async (system, user, onChunk) => {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
@@ -341,4 +332,6 @@ function OutputRenderer({ content }) {
 }
 // ── UI ATOMS ──────────────────────────────────────────────────────
 function Toast({ msg, type, onDone }) {
-    useEffect(() => { const t = setTimeout(onDone,
+    useEffect(() => { const t = setTimeout(onDone, 3200); return () => clearTimeout(t); }, [onDone]);
+    const colors = { success: C.green, error: C.red, info: C.cyan };
+    return (React.createElement("div", { style: { position: "fixed", bottom: 90, left: "50%", transform: "translateX(-50%)", zIndex: 999, background: C.card2, border: "1px solid " + (colors[type] || C.border), borderRadius: 12, padding: "12px 18px", display: "flex", alignItems: "center", gap: 10, boxShadow: "0 8px 32px 
